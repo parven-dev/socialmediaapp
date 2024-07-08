@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>{% block title %}Home Page{% endblock %}</title>
+      {{ ckeditor.load() }}
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <!-- Custom Styles -->
+      <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+      <!-- Font Awesome -->
+      <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,
+      600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet">
+      <style>
+         .form-signup {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            margin-top: 50px;
+            background: #F6F7F7;
+            border-radius: 10px;
+         }
+      </style>
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+         <a class="navbar-brand" href="{{ url_for('home') }}">Social Media App</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+               <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+               {% if current_user.is_authenticated %}
+               <li class="nav-item"><a class="nav-link" href="{{ url_for('create_post') }}">Create Post</a></li>
+               <li class="nav-item"><a class="nav-link" href="{{ url_for('logout') }}">Logout</a></li>
+               <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('profile') }}">
+                  Profile
+                  {% if current_user.profile_picture %}
+                  <img src="{{ url_for('static', filename='images/' ~ current_user.profile_picture) }}"
+                       class="rounded-circle" style="width: 30px; height: 30px;">
+                  {% else %}
+                  <img src="{{ url_for('static', filename='images/user.png') }}"
+                       class="rounded-circle" style="width: 30px; height: 30px;">
+                  {% endif %}
+                  </a>
+               </li>
+               {% else %}
+               <li class="nav-item"><a class="nav-link" href="{{ url_for('register') }}">Register</a></li>
+               <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+               {% endif %}
+            </ul>
+         </div>
+      </nav>
+      <div class="container mt-4">
+
+         {% block content %}
+
+         {% endblock %}
+      </div>
+      <!-- jQuery, Popper.js, and Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <!-- Custom JS -->
+      <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+   </body>
+</html>

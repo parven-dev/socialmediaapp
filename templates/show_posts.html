@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block title %}Post Details{% endblock %}
+{% block content %}
+<div class="container mt-4">
+    <div class="d-flex flex-column flex-md-row align-items-center">
+
+        <div class="ml-md-3">
+            <h1>{{ post.title }}</h1>
+            <h3 class="text-muted">{{ post.subtitle }}
+                {% if post.authors.profile_picture is none %}
+                <img src="{{ url_for('static', filename='images/user.png') }}"
+                     class="mr-3 rounded-circle" alt="poster pic" style="height:50px; width:50px">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/' ~ post.authors.profile_picture) }}"
+                 class="mr-3 rounded-circle"  style="height:100px; width:100px">
+                {% endif %}
+
+        </h3>
+            <div class="post-content">
+                {{ post.content | safe }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row d-flex  mt-4">
+    <div class="col-md-8 col-lg-6">
+        <div data-mdb-input-init class="form-outline mb-4">
+            {% if current_user.is_authenticated %}
+            <form method="POST">
+                <div class="form-group">
+                    {{ form.comment.label(class="form-label") }}
+                    {{ form.comment(class="form-control", placeholder="Write a comment...", rows="3") }}
+                    {% for error in form.comment.errors %}
+                    <small class="text-danger">{{ error }}</small>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            {% else %}
+            <p>You must be <a href="{{ url_for('login') }}">logged in</a> to comment.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<body>
+  <div class="container">
+    <h2 class="mt-4 mb-3">Latest Comments</h2>
+      {% for comment in comment %}
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- List group to display comments -->
+        <div class="list-group">
+          <div class="list-group-item">
+            <div class="media">
+                {% if comment.author.profile_picture != none %}
+              <img src="{{ url_for('static', filename='images/' ~ comment.author.profile_picture) }}"
+                   class="mr-3 rounded-circle" alt="Commenter Image" style="height:40px; width:40px">
+                {% else %}
+                   <img  class="mr-3 rounded-circle" alt="Commenter Image" style="height:40px; width:40px"
+                             src="{{ url_for('static', filename='images/user.png') }}">
+                {% endif %}
+              <div class="media-body">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ comment.author.fullname }}</h5>
+                  <small>{{ comment.today }}</small>
+                </div>
+<!--                <p class="mb-1">nnn</p>-->
+                <small>{{ comment.comment }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      {% endfor %}
+      <hr>
+
+  </div>
+
+  {% endblock %}
+
+
+

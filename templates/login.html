@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block content %}
+<title>{% block title %} Login Page {% endblock %}</title>
+<div class="container">
+   <div class="row justify-content-center">
+      <div class="col-lg-6">
+           <div class="mb-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show">
+                            <span style="color:red">{{ message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+         </div>
+         <form class="form-signup" method="post">
+            <h2 class="text-center mb-4">Login</h2>
+            <div class="mb-3">
+               {{ login.user_name(class="form-control", placeholder="username") }}
+            </div>
+            <div class="mb-3">
+               {{ login.password(class="form-control", placeholder="password") }}
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <p class="mt-3 text-center">Or <a href="{{ url_for('register') }}">create</a> your account</p>
+         </form>
+      </div>
+   </div>
+</div>
+{% endblock %}

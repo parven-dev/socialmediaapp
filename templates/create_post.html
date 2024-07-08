@@ -1,0 +1,26 @@
+
+{% extends "layout.html" %}
+        {% block content %}
+
+
+<form method="post" class="col-md-6 container-fluid">
+    <div class="form-group">
+        {{post.title.label(class="form-label")}} {{ post.title(class="form-control") }}
+    </div>
+
+    <div class="form-group ">
+        {{ post.subtitle.label(class="form-label")}} {{ post.subtitle(class="form-control") }}
+    </div>
+
+    <div class="form-group ">
+        {{ post.content.label(class="form-label")}} {{ post.content(class="form-control") }}
+    </div>
+      <div class="form-group ">
+        {{ post.author.label(class="form-label")}} {{ post.author(class="form-control") }}
+    </div>
+    <div class="form-group">
+        {{ post.submit(class="form-control btn btn-primary")}}
+    </div>
+</form>
+
+{% endblock %}
