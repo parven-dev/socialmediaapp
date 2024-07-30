@@ -21,4 +21,4 @@ from Routes import *  # noqa
 from database import *  # noqa
 
 if __name__ == "__main__":
-    app.run(host="192.168.43.63", port=500)
+    app.run(debug=True, port=3000)
